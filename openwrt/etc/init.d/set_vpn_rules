@@ -1,0 +1,9 @@
+#!/bin/sh /etc/rc.common
+# (C) 2022 nearhop.com
+
+# Set VPN rules
+START=12
+boot() {
+  /sbin/create_vpn_forward_firewall.sh
+}
+

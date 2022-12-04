@@ -1,0 +1,13 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) http://www.nearhop.com
+
+START=99
+STOP=15
+USE_PROCD=1
+
+start_service() {
+	opmode=`/sbin/uci get nearhop.@unum[0].opmode`
+	if [ "$opmode" != "ap" ]; then
+		/sbin/add_blocklist.sh
+	fi
+}

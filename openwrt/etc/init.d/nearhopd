@@ -1,0 +1,21 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) http://www.nearhop.com
+
+START=94
+STOP=15
+USE_PROCD=1
+PROG=/usr/sbin/nearhopd
+
+start_service() {
+	opmode=`/sbin/uci get nearhop.@unum[0].opmode`
+	if [ "$opmode" != "ap" ]; then
+		procd_open_instance
+		procd_set_param command "$PROG"
+		procd_set_param respawn ${respawn_threshold:-3600} ${respawn_timeout:-5} ${respawn_retry:-5}
+		procd_close_instance
+	fi
+}
+
+stop_service() {
+	killall -9 nearhopd
+}
